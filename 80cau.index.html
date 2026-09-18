@@ -1,0 +1,1011 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ôn tập Chủ nghĩa xã hội khoa học</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f3f4f6;
+        }
+        .option-btn {
+            transition: all 0.2s ease-in-out;
+        }
+        .correct {
+            background-color: #10b981 !important; /* Tailwind green-500 */
+            color: white !important;
+            border-color: #10b981 !important;
+            pointer-events: none; /* Khóa nút khi chọn đúng */
+        }
+        .incorrect {
+            background-color: #ef4444 !important; /* Tailwind red-500 */
+            color: white !important;
+            border-color: #ef4444 !important;
+        }
+    </style>
+</head>
+<body class="text-gray-800 antialiased min-h-screen flex flex-col">
+
+    <header class="bg-blue-600 text-white shadow-md sticky top-0 z-50">
+        <div class="max-w-4xl mx-auto px-4 py-4 flex justify-between items-center">
+            <h1 class="text-xl md:text-2xl font-bold">Ôn tập CNXHKH</h1>
+            <button onclick="location.reload()" class="bg-white text-blue-600 hover:bg-blue-50 px-4 py-2 rounded-lg font-semibold text-sm shadow-sm transition">
+                Đảo câu hỏi
+            </button>
+        </div>
+    </header>
+
+    <main class="flex-grow w-full max-w-4xl mx-auto px-4 py-8">
+        <div id="quiz-container" class="space-y-6">
+            <!-- Câu hỏi sẽ được chèn vào đây bằng JavaScript -->
+            <div class="text-center text-gray-500 py-10">Đang tải dữ liệu câu hỏi...</div>
+        </div>
+    </main>
+
+    <footer class="bg-gray-800 text-gray-400 py-6 text-center text-sm">
+        <p>Hệ thống ôn tập trắc nghiệm - Tự động xáo trộn - Cho phép chọn lại</p>
+    </footer>
+
+    <script>
+        const questionsData = [
+            {
+                id: 1,
+                question: "Nội dung chủ yếu, điểm căn bản và là phạm trù trung tâm của chủ nghĩa xã hội khoa học là",
+                options: {
+                    A: "sứ mệnh lịch sử của giai cấp công nhân.",
+                    B: "thời kỳ quá độ lên chủ nghĩa xã hội.",
+                    C: "chính sách kinh tế mới của V.I. Lênin.",
+                    D: "học thuyết về giá trị thặng dư."
+                },
+                answer: "A"
+            },
+            {
+                id: 2,
+                question: "C. Mác và Ph. Angghen đã sử dụng những thuật ngữ nào để chỉ giai cấp công nhân?",
+                options: {
+                    A: "Giai cấp vô sản, giai cấp vô sản hiện đại.",
+                    B: "Bao gồm tất cả các đáp án.",
+                    C: "Giai cấp công nhân hiện đại.",
+                    D: "Giai cấp công nhân đại công nghiệp."
+                },
+                answer: "B"
+            },
+            {
+                id: 3,
+                question: "Theo chủ nghĩa Mác - Lênin, hai phương diện cơ bản để xác định giai cấp công nhân là",
+                options: {
+                    A: "phương diện kinh tế - xã hội và phương diện văn hóa - tư tưởng.",
+                    B: "phương diện chính trị - xã hội và phương diện văn hóa - tư tưởng.",
+                    C: "phương diện kinh tế - xã hội và phương diện chính trị - xã hội.",
+                    D: "phương diện quyền con người và phương diện đạo đức."
+                },
+                answer: "C"
+            },
+            {
+                id: 4,
+                question: "Theo chủ nghĩa Mác - Lênin, về phương diện kinh tế - xã hội trong phương thức sản xuất tư bản chủ nghĩa, giai cấp công nhân là",
+                options: {
+                    A: "những người lao động bị tước đoạt tư liệu sản xuất, họ buộc phải bán sức lao động và bị bóc lột giá trị thặng dư.",
+                    B: "những người lao động nghèo khổ nhất trong nền sản xuất công nghiệp hiện đại.",
+                    C: "những người lao động có trình độ thấp, chủ yếu là lao động chân tay.",
+                    D: "những người lao động trực tiếp hay gián tiếp vận hành các công cụ sản xuất có tính chất công nghiệp ngày càng hiện đại và xã hội hóa cao."
+                },
+                answer: "A"
+            },
+            {
+                id: 5,
+                question: "Theo C. Mác và Ph. Angghen, trong phương thức sản xuất tư bản chủ nghĩa bộ phận tiêu biểu cho giai cấp công nhân hiện đại là",
+                options: {
+                    A: "công nhân công nghiệp công xưởng.",
+                    B: "công nhân khoáng sản.",
+                    C: "công nhân công trường thủ công.",
+                    D: "công nhân nông nghiệp."
+                },
+                answer: "A"
+            },
+            {
+                id: 6,
+                question: "Điền từ còn thiếu vào chỗ trống để hoàn thiện luận điểm sau của C. Mác và Ph. Ăngghen: 'Trong công trường thủ công và trong nghề thủ công, người công nhân sử dụng công cụ của mình, còn trong công xưởng thì người công nhân phải phục vụ...'",
+                options: {
+                    A: "giai cấp tư sản.",
+                    B: "máy móc.",
+                    C: "chủ công xưởng.",
+                    D: "công cụ lao động."
+                },
+                answer: "B"
+            },
+            {
+                id: 7,
+                question: "Điền từ còn thiếu vào chỗ trống để hoàn thiện luận điểm sau của C. Mác và Ph. Ăngghen: 'Các giai cấp khác đều suy tàn và tiêu vong cùng với sự phát triển của đại công nghiệp, còn giai cấp vô sản lại là... của bản thân nền đại công nghiệp'.",
+                options: {
+                    A: "kết quả.",
+                    B: "thành quả.",
+                    C: "sản phẩm.",
+                    D: "sản phẩm tất yếu."
+                },
+                answer: "C"
+            },
+            {
+                id: 8,
+                question: "Điền từ còn thiếu vào chỗ trống để hoàn thiện nhận định sau của C. Mác và Ph. Angghen: '... cũng là một phát minh của thời đại mới, giống như máy móc vậy'.",
+                options: {
+                    A: "Tư sản.",
+                    B: "Nông dân.",
+                    C: "Thợ thủ công.",
+                    D: "Công nhân."
+                },
+                answer: "A"
+            },
+            {
+                id: 9,
+                question: "Theo C. Mác và Ph. Angghen, trong quan hệ sản xuất tư bản chủ nghĩa, giai cấp công nhân là",
+                options: {
+                    A: "giai cấp những công nhân làm thuê hiện đại, buộc phải bán sức lao động để sống.",
+                    B: "giai cấp công nhân hiện đại, có quyền quyết định quá trình tổ chức sản xuất.",
+                    C: "giai cấp công nhân hiện đại, sở hữu những tư liệu sản xuất chủ yếu của xã hội.",
+                    D: "giai cấp những người lao động làm công hưởng lương trong các loại hình sản xuất kinh doanh."
+                },
+                answer: "D"
+            },
+            {
+                id: 10,
+                question: "Theo C.Mác và Ph. Ăngghen, về phương diện chính trị - xã hội trong phương thức sản xuất tư bản chủ nghĩa, giai cấp công nhân là",
+                options: {
+                    A: "Giai cấp những người lao động sở hữu những tư liệu sản xuất chủ yếu của xã hội.",
+                    B: "Giai cấp của những người lao động không sở hữu tư liệu sản xuất chủ yếu của xã hội.",
+                    C: "Giai cấp những người lao động làm công hưởng lương.",
+                    D: "Giai cấp những người lao động tự do sở hữu tư liệu sản xuất chủ yếu của xã hội."
+                },
+                answer: "B"
+            },
+            {
+                id: 11,
+                question: "Mâu thuẫn cơ bản của phương thức sản xuất tư bản chủ nghĩa là",
+                options: {
+                    A: "mâu thuẫn giữa lực lượng sản xuất xã hội hóa ngày càng rộng lớn với nhà nước pháp quyền tư bản chủ nghĩa.",
+                    B: "mâu thuẫn giữa quan hệ sản xuất tư bản chủ nghĩa với quan hệ sản xuất xã hội chủ nghĩa.",
+                    C: "mâu thuẫn giữa lực lượng sản xuất xã hội hóa ngày càng rộng lớn với quan hệ sản xuất tư bản chủ nghĩa dựa trên chế độ tư hữu tư bản chủ nghĩa về tư liệu sản xuất.",
+                    D: "mâu thuẫn giữa các nhà tư bản trong cạnh tranh thị trường tiêu thụ hàng hóa."
+                },
+                answer: "C"
+            },
+            {
+                id: 12,
+                question: "Theo chủ nghĩa xã hội khoa học, trong phương thức sản xuất tư bản chủ nghĩa giai cấp công nhân có đặc điểm nổi bật là",
+                options: {
+                    A: "lao động chân tay.",
+                    B: "lao động bằng phương thức thủ công.",
+                    C: "lao động trí óc.",
+                    D: "lao động bằng phương thức công nghiệp."
+                },
+                answer: "D"
+            },
+            {
+                id: 13,
+                question: "Theo chủ nghĩa xã hội khoa học, trong phương thức sản xuất tư bản chủ nghĩa một trong những đặc điểm chủ yếu của giai cấp công nhân là",
+                options: {
+                    A: "đại biểu cho lực lượng sản xuất tiên tiến, cho phương thức sản xuất tiên tiến.",
+                    B: "đại biểu cho xu hướng 'trung lưu hoá' ngày càng gia tăng ở các nước tư bản chủ nghĩa.",
+                    C: "giai cấp nghèo khổ nhất trong nền sản xuất vật chất hiện đại.",
+                    D: "giai cấp chịu áp bức, bóc lột nặng nề nhất trong nền sản xuất vật chất hiện đại."
+                },
+                answer: "A"
+            },
+            {
+                id: 14,
+                question: "Theo chủ nghĩa xã hội khoa học, giai cấp công nhân là",
+                options: {
+                    A: "một tập đoàn xã hội, hình thành và phát triển cùng với quá trình phát triển của nền công nghiệp hiện đại; họ lao động bằng phương thức công nghiệp ngày càng hiện đại và gắn liền với quá trình sản xuất vật chất hiện đại...",
+                    B: "người làm thuê do không có tư liệu sản xuất, buộc phải bán sức lao động để sống và bị giai cấp tư sản bóc lột giá trị thặng dư.",
+                    C: "giai cấp có sứ mệnh phủ định chế độ tư bản chủ nghĩa, xây dựng thành công chủ nghĩa xã hội và chủ nghĩa cộng sản trên toàn thế giới.",
+                    D: "Bao gồm tất cả các đáp án."
+                },
+                answer: "D"
+            },
+            {
+                id: 15,
+                question: "Điền từ còn thiếu vào chỗ trống để hoàn thiện quan điểm sau: 'Thực hiện sự nghiệp giải phóng thế giới ấy - đó là sứ mệnh lịch sử của... hiện đại' (C. Mác).",
+                options: {
+                    A: "giai cấp tư sản.",
+                    B: "tầng lớp trí thức.",
+                    C: "giai cấp vô sản.",
+                    D: "thanh niên."
+                },
+                answer: "C"
+            },
+            {
+                id: 16,
+                question: "Theo chủ nghĩa xã hội khoa học, một trong những sứ mệnh lịch sử của giai cấp công nhân về nội dung kinh tế là",
+                options: {
+                    A: "cơ sở xã hội quan trọng của Đảng Cộng sản.",
+                    B: "xây dựng nhà nước pháp quyền xã hội chủ nghĩa.",
+                    C: "xây dựng nền văn hóa tiên tiến, đậm đà bản sắc dân tộc.",
+                    D: "tạo tiền đề vật chất - kỹ thuật cho sự ra đời của xã hội mới."
+                },
+                answer: "D"
+            },
+            {
+                id: 17,
+                question: "Theo chủ nghĩa xã hội khoa học, giai cấp công nhân chỉ tìm thấy lợi ích chân chính của mình khi nào?",
+                options: {
+                    A: "Khi thực hiện được lợi ích chung của cả xã hội.",
+                    B: "Khi thực hiện được lợi ích riêng của giai cấp mình.",
+                    C: "Khi thực hiện được lợi ích của đội ngũ doanh nhân.",
+                    D: "Khi thực hiện được lợi ích của giai cấp tư sản."
+                },
+                answer: "A"
+            },
+            {
+                id: 18,
+                question: "Theo chủ nghĩa xã hội khoa học, một trong những sứ mệnh lịch sử của giai cấp công nhân về nội dung chính trị - xã hội là",
+                options: {
+                    A: "thực hiện thành công sự nghiệp công nghiệp hoá, hiện đại hoá đất nước.",
+                    B: "tiến hành cách mạng chính trị, giành quyền lực về tay giai cấp công nhân và nhân dân lao động.",
+                    C: "xây dựng đạo đức, lối sống, tác phong công nghiệp cho người lao động.",
+                    D: "tập trung xây dựng hệ giá trị mới của giai cấp công nhân như: tự do, nhân quyền và bình đẳng."
+                },
+                answer: "B"
+            },
+            {
+                id: 19,
+                question: "Theo chủ nghĩa xã hội khoa học, một trong những sứ mệnh lịch sử của giai cấp công nhân về nội dung chính trị - xã hội là",
+                options: {
+                    A: "thiết lập nhà nước kiểu mới mang bản chất giai cấp tư sản.",
+                    B: "thiết lập nhà nước kiểu mới mang bản chất giai cấp nông dân.",
+                    C: "thiết lập nhà nước kiểu mới, mang bản chất của giai cấp công nhân.",
+                    D: "thiết lập nhà nước kiểu mới mang bản chất giai cấp công - nông."
+                },
+                answer: "C"
+            },
+            {
+                id: 20,
+                question: "Theo chủ nghĩa xã hội khoa học, sứ mệnh lịch sử của giai cấp công nhân về nội dung chính trị - xã hội là",
+                options: {
+                    A: "tiến hành cách mạng chính trị, giành quyền lực về tay giai cấp công nhân và nhân dân lao động.",
+                    B: "thiết lập nhà nước kiểu mới, mang bản chất của giai cấp công nhân, xây dựng nền dân chủ xã hội chủ nghĩa.",
+                    C: "sử dụng nhà nước như một công cụ có hiệu lực để cải tạo xã hội cũ và tổ chức xây dựng xã hội mới.",
+                    D: "Bao gồm tất cả các đáp án."
+                },
+                answer: "D"
+            },
+            {
+                id: 21,
+                question: "Theo chủ nghĩa xã hội khoa học, sứ mệnh lịch sử của giai cấp công nhân về nội dung văn hóa, tư tưởng là",
+                options: {
+                    A: "tập trung xây dựng hệ giá trị mới: lao động; công bằng; dân chủ; bình đẳng và tự do.",
+                    B: "xây dựng và củng cố ý thức hệ tiên tiến của giai cấp công nhân.",
+                    C: "phát triển văn hóa, xây dựng con người mới xã hội chủ nghĩa.",
+                    D: "Bao gồm tất cả các đáp án."
+                },
+                answer: "D"
+            },
+            {
+                id: 22,
+                question: "Theo chủ nghĩa xã hội khoa học, một trong những sứ mệnh lịch sử của giai cấp công nhân về nội dung văn hóa, tư tưởng là",
+                options: {
+                    A: "tập trung xây dựng hệ giá trị mới: lao động; công bằng; dân chủ; bình đẳng và tự do.",
+                    B: "tập trung xây dựng nhà nước pháp quyền xã hội chủ nghĩa.",
+                    C: "tập trung xây dựng cơ sở vật chất - kỹ thuật cho chủ nghĩa xã hội.",
+                    D: "tập trung xây dựng nền kinh tế hàng hóa nhiều thành phần định hướng xã hội chủ nghĩa."
+                },
+                answer: "A"
+            },
+            {
+                id: 23,
+                question: "Theo chủ nghĩa xã hội khoa học, một trong những sứ mệnh lịch sử của giai cấp công nhân về nội dung văn hoá, tư tưởng là",
+                options: {
+                    A: "phát triển văn hóa, xây dựng con người mới xã hội chủ nghĩa.",
+                    B: "phát triển kinh tế bền vững hướng tới bảo vệ môi trường sinh thái.",
+                    C: "phát triển nền kinh tế thị trường định hướng xã hội chủ nghĩa.",
+                    D: "Tất cả các đáp án đều đúng."
+                },
+                answer: "A"
+            },
+            {
+                id: 24,
+                question: "Theo chủ nghĩa xã hội khoa học, giai cấp nào là lực lượng duy nhất có đủ điều kiện để tổ chức và lãnh đạo xã hội, tạo nền tảng vững chắc để xây dựng chủ nghĩa xã hội?",
+                options: {
+                    A: "Giai cấp công nhân.",
+                    B: "Giai cấp công - nông.",
+                    C: "Giai cấp nông dân.",
+                    D: "Giai cấp tư sản."
+                },
+                answer: "A"
+            },
+            {
+                id: 25,
+                question: "Theo chủ nghĩa xã hội khoa học, một trong những điều kiện khách quan quy định sứ mệnh lịch sử của giai cấp công nhân là",
+                options: {
+                    A: "Giai cấp công nhân đại diện cho phương thức sản xuất tiên tiến và lực lượng sản xuất hiện đại.",
+                    B: "Sự tăng nhanh về số lượng và chất lượng của giai cấp công nhân.",
+                    C: "Sự phát triển về chất của bản thân giai cấp công nhân.",
+                    D: "Giai cấp công nhân thành lập ra chính đảng của mình."
+                },
+                answer: "A"
+            },
+            {
+                id: 26,
+                question: "Theo chủ nghĩa xã hội khoa học, một trong những điều kiện khách quan quy định sứ mệnh lịch sử của giai cấp công nhân là",
+                options: {
+                    A: "Sự tăng nhanh về số lượng và chất lượng của giai cấp công nhân.",
+                    B: "Lợi ích cơ bản của giai cấp công nhân đối lập trực tiếp với lợi ích cơ bản của giai cấp tư sản.",
+                    C: "Sự phát triển về chất của bản thân giai cấp công nhân.",
+                    D: "Giai cấp công nhân thành lập ra chính đảng của mình."
+                },
+                answer: "B"
+            },
+            {
+                id: 27,
+                question: "Theo chủ nghĩa xã hội khoa học, đặc tính quan trọng, quy định bản chất cách mạng của giai cấp công nhân là",
+                options: {
+                    A: "giai cấp nghèo khổ nhất nên có bản chất cách mạng nhất.",
+                    B: "giai cấp đại biểu cho tương lai, cho xu thế đi lên của tiến trình phát triển lịch sử.",
+                    C: "giai cấp đại biểu cho quan hệ sản xuất tư nhân tư bản chủ nghĩa về tư liệu sản xuất.",
+                    D: "giai cấp có số lượng đông đảo nhất."
+                },
+                answer: "B"
+            },
+            {
+                id: 28,
+                question: "Theo chủ nghĩa xã hội khoa học, một trong những điều kiện chủ quan để giai cấp công nhân thực hiện sứ mệnh lịch sử của mình là",
+                options: {
+                    A: "giai cấp công nhân là sản phẩm và là chủ thể của nền sản xuất công nghiệp hiện đại.",
+                    B: "sự phát triển của bản thân giai cấp công nhân cả về số lượng và chất lượng.",
+                    C: "giai cấp công nhân là đại diện cho lực lượng sản xuất tiên tiến của xã hội hiện đại.",
+                    D: "Tất cả các đáp án đều đúng."
+                },
+                answer: "B"
+            },
+            {
+                id: 29,
+                question: "Theo chủ nghĩa xã hội khoa học, một trong những điều kiện chủ quan để giai cấp công nhân thực hiện sứ mệnh lịch sử của mình là",
+                options: {
+                    A: "liên minh giai cấp giữa giai cấp công nhân với giai cấp tư sản và giai cấp địa chủ.",
+                    B: "liên minh giai cấp giữa giai cấp công nhân với giai cấp nông dân và các tầng lớp lao động khác.",
+                    C: "liên minh giai cấp giữa giai cấp công nhân với giai cấp địa chủ.",
+                    D: "liên minh giữa giai cấp tư sản và giai cấp nông dân."
+                },
+                answer: "B"
+            },
+            {
+                id: 30,
+                question: "Theo chủ nghĩa Mác - Lênin, để phát triển giai cấp công nhân về số lượng và chất lượng phải đặc biệt chú ý đến những biện pháp cơ bản nào?",
+                options: {
+                    A: "Phát triển nông nghiệp bền vững.",
+                    B: "Phát triển công nghiệp và sự trưởng thành của Đảng Cộng sản.",
+                    C: "Xây dựng đội ngũ trí thức vững mạnh.",
+                    D: "Phát triển thương nghiệp và sự trưởng thành của đội ngũ doanh nhân."
+                },
+                answer: "B"
+            },
+            {
+                id: 31,
+                question: "Theo chủ nghĩa Mác - Lênin, 'tiền đề thực tiễn tuyệt đối cần thiết' để phát triển giai cấp công nhân về số lượng và chất lượng là",
+                options: {
+                    A: "phát triển nông nghiệp.",
+                    B: "phát triển kinh tế hộ gia đình.",
+                    C: "phát triển công nghiệp.",
+                    D: "phát triển lâm nghiệp."
+                },
+                answer: "C"
+            },
+            {
+                id: 32,
+                question: "Theo chủ nghĩa xã hội khoa học, nhân tố chủ quan quan trọng nhất để giai cấp công nhân thực hiện thắng lợi sứ mệnh lịch sử của mình là",
+                options: {
+                    A: "Công đoàn.",
+                    B: "Đoàn Thanh niên.",
+                    C: "Đảng Cộng sản.",
+                    D: "Hội Sinh viên."
+                },
+                answer: "C"
+            },
+            {
+                id: 33,
+                question: "Tổ chức nào là dấu hiệu trưởng thành vượt bậc của giai cấp công nhân với tư cách là giai cấp cách mạng?",
+                options: {
+                    A: "Công hội đỏ.",
+                    B: "Tổng Liên đoàn Lao động Việt Nam.",
+                    C: "Đảng Cộng sản.",
+                    D: "Đoàn Thanh niên Cộng sản Hồ Chí Minh."
+                },
+                answer: "C"
+            },
+            {
+                id: 34,
+                question: "Quy luật chung, phổ biến cho sự ra đời của Đảng Cộng sản là",
+                options: {
+                    A: "sự kết hợp giữa học thuyết giá trị thặng dư với phong trào công nhân.",
+                    B: "sự kết hợp giữa chủ nghĩa yêu nước với phong trào công nhân.",
+                    C: "sự kết hợp giữa chủ nghĩa Mác - Lênin với phong trào công nhân.",
+                    D: "sự kết hợp giữa chủ nghĩa yêu nước với tư tưởng Hồ Chí Minh."
+                },
+                answer: "C"
+            },
+            {
+                id: 35,
+                question: "Theo chủ nghĩa xã hội khoa học, lực lượng xã hội nào là cơ sở xã hội và nguồn bổ sung lực lượng quan trọng nhất của Đảng?",
+                options: {
+                    A: "Giai cấp nông dân.",
+                    B: "Đội ngũ trí thức.",
+                    C: "Giai cấp công nhân.",
+                    D: "Đội ngũ doanh nhân."
+                },
+                answer: "C"
+            },
+            {
+                id: 36,
+                question: "Theo chủ nghĩa xã hội khoa học, những điều kiện chủ quan để giai cấp công nhân thực hiện sứ mệnh lịch sử của mình là",
+                options: {
+                    A: "Sự phát triển của bản thân giai cấp công nhân cả về số lượng và chất lượng.",
+                    B: "Đảng Cộng sản ra đời và lãnh đạo cách mạng.",
+                    C: "Liên minh giai cấp giữa giai cấp công nhân với giai cấp nông dân và các tầng lớp lao động khác.",
+                    D: "Bao gồm tất cả các đáp án trên."
+                },
+                answer: "D"
+            },
+            {
+                id: 37,
+                question: "Một trong những điểm tương đối ổn định của giai cấp công nhân ở các nước tư bản chủ nghĩa hiện nay so với giai cấp công nhân truyền thống ở thế kỷ XIX là",
+                options: {
+                    A: "giai cấp công nhân hiện nay vẫn là lực lượng sản xuất hàng đầu của xã hội hiện đại.",
+                    B: "giai cấp công nhân hiện nay vẫn là giai cấp sở hữu những tư liệu sản xuất chủ yếu của xã hội.",
+                    C: "giai cấp công nhân hiện nay vẫn là giai cấp lao động chân tay là chủ yếu.",
+                    D: "Bao gồm tất cả các đáp án trên."
+                },
+                answer: "A"
+            },
+            {
+                id: 38,
+                question: "Một trong những điểm tương đối ổn định của giai cấp công nhân ở các nước tư bản chủ nghĩa hiện nay so với giai cấp công nhân truyền thống ở thế kỷ XIX là",
+                options: {
+                    A: "giai cấp công nhân là chủ thể của công cuộc đổi mới, phát triển đất nước theo định hướng xã hội chủ nghĩa.",
+                    B: "giai cấp công nhân là chủ thể của việc xây dựng và hoàn thiện nhà nước pháp quyền xã hội chủ nghĩa.",
+                    C: "giai cấp công nhân là chủ thể của quá trình xây dựng nền văn hóa Việt Nam tiên tiến đậm đà bản sắc dân tộc.",
+                    D: "giai cấp công nhân là chủ thể của quá trình sản xuất công nghiệp hiện đại mang tính xã hội hóa ngày càng cao."
+                },
+                answer: "D"
+            },
+            {
+                id: 39,
+                question: "Một trong những điểm tương đối ổn định của giai cấp công nhân ở các nước tư bản chủ nghĩa hiện nay so với giai cấp công nhân truyền thống ở thế kỷ XIX là",
+                options: {
+                    A: "một bộ phận công nhân vẫn là lực lượng lãnh đạo xã hội.",
+                    B: "một bộ phận công nhân vẫn là chủ quyền lực nhà nước.",
+                    C: "phần lớn công nhân vẫn sở hữu những tư liệu sản xuất chủ yếu của xã hội.",
+                    D: "công nhân vẫn bị giai cấp tư sản và chủ nghĩa tư bản bóc lột giá trị thặng dư."
+                },
+                answer: "D"
+            },
+            {
+                id: 40,
+                question: "Những điểm tương đối ổn định của giai cấp công nhân ở các nước tư bản chủ nghĩa hiện nay so với giai cấp công nhân truyền thống ở thế kỷ XIX là",
+                options: {
+                    A: "giai cấp công nhân vẫn bị giai cấp tư sản và chủ nghĩa tư bản bóc lột giá trị thặng dư.",
+                    B: "công nghiệp hóa vẫn là cơ sở khách quan để giai cấp công nhân phát triển mạnh mẽ cả về số lượng và chất lượng.",
+                    C: "giai cấp công nhân hiện nay vẫn là lực lượng sản xuất hàng đầu của xã hội hiện đại.",
+                    D: "Bao gồm tất cả các đáp án trên."
+                },
+                answer: "D"
+            },
+            {
+                id: 41,
+                question: "Những biến đổi và khác biệt của giai cấp công nhân hiện nay so với giai cấp công nhân truyền thống ở thế kỷ XIX là",
+                options: {
+                    A: "xu hướng 'trí tuệ hóa' tăng nhanh.",
+                    B: "xu hướng 'trung lưu hoá' gia tăng.",
+                    C: "giai cấp giữ vai trò lãnh đạo ở một số quốc gia xã hội chủ nghĩa",
+                    D: "Bao gồm tất cả các đáp án trên."
+                },
+                answer: "D"
+            },
+            {
+                id: 42,
+                question: "Mục tiêu đấu tranh trực tiếp của giai cấp công nhân và nhân dân lao động trong thực hiện sứ mệnh lịch sử của giai cấp công nhân ở các nước tư bản chủ nghĩa trên thế giới hiện nay là",
+                options: {
+                    A: "thực hiện thành công sự nghiệp công nghiệp hóa, hiện đại hóa đất nước",
+                    B: "chống bất công và bất bình đẳng xã hội.",
+                    C: "lãnh đạo thành công sự nghiệp đổi mới.",
+                    D: "giải quyết thành công các nhiệm vụ của thời kỳ quá độ lên chủ nghĩa xã hội."
+                },
+                answer: "B"
+            },
+            {
+                id: 43,
+                question: "Mục tiêu đấu tranh lâu dài của giai cấp công nhân và nhân dân lao động trong thực hiện sứ mệnh lịch sử của giai cấp công nhân ở các nước tư bản chủ nghĩa trên thế giới hiện nay là",
+                options: {
+                    A: "thực hiện thành công sự nghiệp công nghiệp hoá, hiện đại hoá đất nước.",
+                    B: "lãnh đạo thành công sự nghiệp đồi mới.",
+                    C: "giành chính quyền về tay giai cấp công nhân và nhân dân lao động.",
+                    D: "giải quyết thành công các nhiệm vụ của thời kỳ quá độ lên chủ nghĩa xã hội."
+                },
+                answer: "C"
+            },
+            {
+                id: 44,
+                question: "Một trong những sứ mệnh lịch sử của giai cấp công nhân ở các nước tư bản chủ nghĩa trên thế giới hiện nay về nội dung văn hóa, tư tưởng là",
+                options: {
+                    A: "cuộc đấu tranh giữa giai cấp tư sản và giai cấp nông dân.",
+                    B: "cuộc đấu tranh giữa giai cấp công nhân và giai cấp nông dân.",
+                    C: "cuộc đấu tranh giữa chủ nghĩa xã hội và chủ nghĩa cộng sản.",
+                    D: "cuộc đấu tranh ý thức hệ, đó là cuộc đấu tranh giữa chủ nghĩa xã hội và chủ nghĩa tư bản."
+                },
+                answer: "D"
+            },
+            {
+                id: 45,
+                question: "Sứ mệnh lịch sử của giai cấp công nhân ở các nước tư bản chủ nghĩa trên thế giới hiện nay về nội dung văn hoa, tư tưởng là",
+                options: {
+                    A: "đấu tranh để bảo vệ nền tảng tư tưởng của Đảng Cộng sản.",
+                    B: "giáo dục nhận thức và củng cố niềm tin khoa học đối với lý tưởng, mục tiêu của chủ nghĩa xã hội cho giai cấp công nhân và nhân dân lao động.",
+                    C: "giáo dục và thực hiện chủ nghĩa quốc tế chân chính.",
+                    D: "Bao gồm tất cả các đáp án trên."
+                },
+                answer: "D"
+            },
+            {
+                id: 46,
+                question: "Những đặc điểm chủ yếu của giai cấp công nhân Việt Nam về sự ra đời và phát triển gắn liền với chính sách khai thác thuộc địa của thực dân Pháp",
+                options: {
+                    A: "là giai cấp trực tiếp đối kháng với tư bản thực dân Pháp.",
+                    B: "gắn bó mật thiết với các tầng lớp nhân dân trong xã hội.",
+                    C: "ra đời trước giai cấp tư sản, vào đầu thế kỷ XX.",
+                    D: "Bao gồm tất cả các đáp án trên."
+                },
+                answer: "D"
+            },
+            {
+                id: 47,
+                question: "Điểm khác biệt về sự xuất hiện của giai cấp công nhân Việt Nam so với giai cấp công nhân ở những nước tư bản",
+                options: {
+                    A: "ra đời sau giai cấp tư sản Việt Nam.",
+                    B: "ra đời cùng với giai cấp tư sản Việt Nam.",
+                    C: "ra đời trước giai cấp tư sản Việt Nam.",
+                    D: "ra đời sau giai cấp tiểu tư sản Việt Nam."
+                },
+                answer: "C"
+            },
+            {
+                id: 48,
+                question: "Trong các lực lượng tham gia đấu tranh chống đế quốc thực dân và phong kiến để xây dựng chủ nghĩa xã hội ở nước ta, giai cấp nào có tinh thần cách mạng triệt để nhất?",
+                options: {
+                    A: "Giai cấp nông dân Việt Nam.",
+                    B: "Giai cấp tư sản Việt Nam.",
+                    C: "Đội ngũ trí thức, nhân dân lao động Việt Nam.",
+                    D: "Giai cấp công nhân Việt Nam."
+                },
+                answer: "D"
+            },
+            {
+                id: 49,
+                question: "Giai cấp công nhân Việt Nam có mối liên hệ tự nhiên, chặt chẽ với giai cấp, tầng lớp nào trong xã hội?",
+                options: {
+                    A: "Giai cấp nông dân và các tầng lớp lao động trong xã hội.",
+                    B: "Giai cấp tư sản và các tầng lớp lao động trong xã hội.",
+                    C: "Giai cấp nông dân và giai cấp tư sản.",
+                    D: "Giai cấp nông dân và đội ngũ trí thức."
+                },
+                answer: "A"
+            },
+            {
+                id: 50,
+                question: "Giai cấp công nhân Việt Nam xây dựng khối liên minh với giai cấp, tầng lớp nào để làm nòng cốt trong khối đại đoàn kết toàn dân tộc?",
+                options: {
+                    A: "Giai cấp nông dân, địa chủ phong kiến và nhân dân lao động.",
+                    B: "Giai cấp nông dân và đội ngũ trí thức.",
+                    C: "Giai cấp tư sản, giai cấp nông dân, doanh nhân, thanh niên.",
+                    D: "Tất cả các đáp án trên đều đúng."
+                },
+                answer: "B"
+            },
+            {
+                id: 51,
+                question: "Học thuyết về hình thái kinh tế - xã hội do C. Mác và Ph. Angghen khởi xướng, được V.I. Lênin kế thừa, phát triển và hiện thực hóa ở quốc gia nào?",
+                options: {
+                    A: "Việt Nam.",
+                    B: "Trung Quốc.",
+                    C: "Nga Xô viết.",
+                    D: "Triều Tiên."
+                },
+                answer: "C"
+            },
+            {
+                id: 52,
+                question: "Theo chủ nghĩa Mác - Lênin, tiền đề vật chất quan trọng nhất của cách mạng xã hội chủ nghĩa là",
+                options: {
+                    A: "chủ nghĩa duy vật lịch sử và học thuyết hình thái kinh tế - xã hội.",
+                    B: "chủ nghĩa duy vật lịch sử và chủ nghĩa duy vật biện chứng.",
+                    C: "sự phát triển của lực lượng sản xuất và sự ra đời của học thuyết hình thái kinh tế - xã hội.",
+                    D: "sự phát triển của lực lượng sản xuất và sự trưởng thành của giai cấp công nhân."
+                },
+                answer: "D"
+            },
+            {
+                id: 53,
+                question: "Theo chủ nghĩa Mác - Lênin, sự thay thế hình thái kinh tế - xã hội tư bản chủ nghĩa bằng hình thái kinh tế - xã hội cộng sản chủ nghĩa được thực hiện thông qua",
+                options: {
+                    A: "cách mạng xã hội chủ nghĩa.",
+                    B: "cách mạng dân chủ.",
+                    C: "tư sản dân quyền cách mạng.",
+                    D: "cách mạng ruộng đất."
+                },
+                answer: "A"
+            },
+            {
+                id: 54,
+                question: "Theo C. Mác và Ph. Ăngghen, hình thái kinh tế - xã hội cộng sản chủ nghĩa gồm những giai đoạn nào?",
+                options: {
+                    A: "Gồm ba giai đoạn: thời kỳ quá độ, giai đoạn thấp và giai đoạn cao.",
+                    B: "Gồm hai giai đoạn, giai đoạn thấp và giai đoạn cao.",
+                    C: "Gồm hai giai đoạn: thời kỳ quá độ và chủ nghĩa xã hội.",
+                    D: "Tất cả các đáp án trên đều đúng."
+                },
+                answer: "B"
+            },
+            {
+                id: 55,
+                question: "Theo C. Mác và Ph. Ăngghen, giai đoạn lịch sử giữa xã hội tư bản chủ nghĩa và xã hội cộng sản chủ nghĩa được gọi là gì?",
+                options: {
+                    A: "Chủ nghĩa xã hội.",
+                    B: "Xã hội xã hội chủ nghĩa.",
+                    C: "Thời kỳ quá độ lên chủ nghĩa cộng sản.",
+                    D: "Cách mạng vô sản."
+                },
+                answer: "C"
+            },
+            {
+                id: 56,
+                question: "Điền từ vào chỗ trống để hoàn thiện luận điểm của C. Mác: 'Giữa xã hội tư bản chủ nghĩa và xã hội cộng sản chủ nghĩa là một thời kỳ cải biến cách mạng từ xã hội nọ sang xã hội kia. Thích ứng với thời kỳ ấy là một thời kỳ quá độ... và nhà nước của thời kỳ ấy không thể là cái gì khác hơn là nền chuyên chính cách mạng của giai cấp vô sản'.",
+                options: {
+                    A: "kinh tế.",
+                    B: "văn hóa.",
+                    C: "xã hội.",
+                    D: "chính trị."
+                },
+                answer: "D"
+            },
+            {
+                id: 57,
+                question: "Điền vào chỗ trống để hoàn thành luận điểm của C. Mác 'Cái xã hội mà chúng ta nói ở đây không phải là một xã hội... đã phát triển trên những cơ sở của chính nó, mà trái lại là một xã hội... vừa thoát thai từ xã hội tư bản chủ nghĩa'.",
+                options: {
+                    A: "cộng sản chủ nghĩa.",
+                    B: "cộng sản nguyên thủy.",
+                    C: "tư bản chủ nghĩa.",
+                    D: "chiếm hữu nô lệ."
+                },
+                answer: "A"
+            },
+            {
+                id: 58,
+                question: "Trong phương thức sản xuất tư bản chủ nghĩa, điều kiện kinh tế cho sự ra đời của chủ nghĩa xã hội là gì?",
+                options: {
+                    A: "Mâu thuẫn giữa lực lượng sản xuất mang tính xã hội hóa cao với quan hệ sản xuất dựa trên chế độ chiếm hữu tư nhân tư bản chủ nghĩa.",
+                    B: "Mâu thuẫn giữa giai cấp công nhân hiện đại với giai cấp tư sản đã lỗi thời.",
+                    C: "Cuộc đấu tranh của giai cấp công nhân chống lại sự áp bức, bóc lột của giai cấp tư sản.",
+                    D: "Bao gồm tất cả các đáp án trên."
+                },
+                answer: "A"
+            },
+            {
+                id: 59,
+                question: "Trong phương thức sản xuất tư bản chủ nghĩa, điều kiện chính trị - xã hội cho sự ra đời của chủ nghĩa xã hội là gì?",
+                options: {
+                    A: "Mâu thuẫn giữa giai cấp công nhân hiện đại với giai cấp tư sản.",
+                    B: "Sự trưởng thành của giai cấp công nhân cả về số lượng và chất lượng.",
+                    C: "Sự ra đời của Đảng Cộng sản để lãnh đạo cuộc đấu tranh của giai cấp công nhân.",
+                    D: "Bao gồm tất cả các đáp án trên."
+                },
+                answer: "D"
+            },
+            {
+                id: 60,
+                question: "Trong phương thức sản xuất tư bản chủ nghĩa, mâu thuẫn kinh tế cơ bản là",
+                options: {
+                    A: "mâu thuẫn giữa tính chất xã hội hóa của lực lượng sản xuất với chế độ chiếm hữu tư nhân tư bản chủ nghĩa đối với tư liệu sản xuất.",
+                    B: "mâu thuẫn giữa lực lượng sản xuất hiện đại với lực lượng sản xuất lỗi thời.",
+                    C: "mâu thuẫn giữa giai cấp công nhân hiện đại với giai cấp tư sản lỗi thời.",
+                    D: "Tất cả các đáp án trên đều đúng."
+                },
+                answer: "A"
+            },
+            {
+                id: 61,
+                question: "Biểu hiện về mặt xã hội của mâu thuẫn giữa tính chất xã hội hóa của lực lượng sản xuất với chế độ chiếm hữu tư nhân tư bản chủ nghĩa đối với tư liệu sản xuất là",
+                options: {
+                    A: "mâu thuẫn giữa giai cấp công nhân hiện đại với giai cấp tư sản lỗi thời.",
+                    B: "mâu thuẫn giữa địa chủ phong kiến với nông dân.",
+                    C: "mâu thuẫn giữa chủ nghĩa tư bản và chủ nghĩa xã hội.",
+                    D: "mâu thuẫn giữa chủ nghĩa thực dân, đế quốc với nhân dân thuộc địa."
+                },
+                answer: "A"
+            },
+            {
+                id: 62,
+                question: "Theo chủ nghĩa Mác - Lênin, tiền đề kinh tế - xã hội dẫn tới sự sụp đổ không tránh khỏi của chủ nghĩa tư bản là gì?",
+                options: {
+                    A: "Sự phát triển về lực lượng sản xuất và sự trưởng thành của giai cấp công nhân.",
+                    B: "Mâu thuẫn giữa giai cấp công nhân hiện đại với giai cấp tư sản lỗi thời.",
+                    C: "Mâu thuẫn giữa tính chất xã hội hóa của lực lượng sản xuất với chế độ chiếm hữu tư nhân tư bản chủ nghĩa đối với tư liệu sản xuất.",
+                    D: "Cách mạng tư sản."
+                },
+                answer: "A"
+            },
+            {
+                id: 63,
+                question: "Điền từ vào chỗ trống để hoàn thành luận điểm của C. Mác và Ph. Ăngghen: 'Giai cấp tư sản không chỉ tạo... sẽ giết mình mà còn tạo ra những người sử dụng... đó, những công nhân hiện đại, những người vô sản'.",
+                options: {
+                    A: "vũ khí.",
+                    B: "công cụ.",
+                    C: "vũ lực.",
+                    D: "thế lực."
+                },
+                answer: "A"
+            },
+            {
+                id: 64,
+                question: "Theo chủ nghĩa xã hội khoa học, cuộc cách mạng của giai cấp công nhân và nhân dân lao động dưới sự lãnh đạo của Đảng Cộng sản là",
+                options: {
+                    A: "cách mạng vô sản.",
+                    B: "cách mạng công nghiệp.",
+                    C: "cách mạng nông nghiệp.",
+                    D: "Tất cả các đáp án đều đúng."
+                },
+                answer: "A"
+            },
+            {
+                id: 65,
+                question: "Điền vào chỗ trống để hoàn thành luận điểm của C. Mác và Ph. Angghen: 'Thay thế cho xã hội tư sản cũ với các giai cấp và những sự đối lập giai cấp của nó sẽ là một khối liên hiệp, trong đó... của mỗi người là điều kiện của... của tất cả mọi người'.",
+                options: {
+                    A: "sự phát triển tự do.",
+                    B: "sự phát triển toàn diện.",
+                    C: "sự phát triển tự thân.",
+                    D: "sự phát triển hài hòa."
+                },
+                answer: "A"
+            },
+            {
+                id: 66,
+                question: "Theo chủ nghĩa xã hội khoa học, đặc trưng bản chất nào của chủ nghĩa xã hội thể hiện sự khác biệt về chất giữa hình thái kinh tế - xã hội cộng sản chủ nghĩa so với các hình thái kinh tế - xã hội ra đời trước?",
+                options: {
+                    A: "Chủ nghĩa xã hội có nền kinh tế phát triển cao, lực lượng sản xuất.",
+                    B: "Chủ nghĩa xã hội giải phóng giai cấp, giải phóng dân tộc, giải phóng xã hội, giải phóng con người, tạo điều kiện để con người phát triển toàn diện.",
+                    C: "Chủ nghĩa xã hội do nhân dân lao động làm chủ.",
+                    D: "Chủ nghĩa xã hội có nền văn hóa phát triển cao, kế thừa và phát huy những giá trị văn hóa dân tộc và tinh hoa văn hóa nhân loại."
+                },
+                answer: "B"
+            },
+            {
+                id: 67,
+                question: "Theo chủ nghĩa xã hội khoa học, đặc trưng nào của chủ nghĩa xã hội thể hiện bản chất nhân văn, nhân đạo?",
+                options: {
+                    A: "Chủ nghĩa xã hội có nền kinh tế phát triển cao, lực lượng sản xuất hiện đại.",
+                    B: "Chủ nghĩa xã hội giải phóng giai cấp, giải phóng dân tộc, giải phóng xã hội, giải phóng con người, tạo điều kiện để con người phát triển toàn diện.",
+                    C: "Chủ nghĩa xã hội do nhân dân lao động làm chủ.",
+                    D: "Chủ nghĩa xã hội có nền văn hóa phát triển cao, kế thừa và phát huy những giá trị văn hóa dân tộc và tinh hoa văn hóa nhân loại."
+                },
+                answer: "B"
+            },
+            {
+                id: 68,
+                question: "Theo chủ nghĩa xã hội khoa học, đặc trưng về phương diện kinh tế của chủ nghĩa xã hội là",
+                options: {
+                    A: "có nền kinh tế phát triển dựa trên lực lượng sản xuất hiện đại và chế độ tư hữu về tư liệu sản xuất chủ yếu.",
+                    B: "có nền kinh tế phát triển cao dựa trên lực lượng sản xuất hiện đại và chế độ công hữu về tư liệu sản xuất chủ yếu.",
+                    C: "có nền văn hóa phát triển cao.",
+                    D: "giải phóng giai cấp, giải phóng dân tộc, giải phóng xã hội, giải phóng con người, tạo điều kiện để con người phát triển toàn diện."
+                },
+                answer: "B"
+            },
+            {
+                id: 69,
+                question: "Theo V.I. Lênin, mục đích cao cả của chủ nghĩa xã hội cần đạt đến là",
+                options: {
+                    A: "xóa bỏ sự phân chia xã hội thành giai cấp.",
+                    B: "biến tất cả thành viên trong xã hội thành người lao động.",
+                    C: "tiêu diệt cơ sở của mọi tình trạng người bóc lột người.",
+                    D: "Bao gồm tất cả các đáp án trên."
+                },
+                answer: "D"
+            },
+            {
+                id: 70,
+                question: "Chủ nghĩa xã hội có nền kinh tế phát triển cao dựa trên lực lượng sản xuất hiện đại và chế độ công hữu về tư liệu sản xuất chủ yếu là đặc trưng bản chất của chủ nghĩa xã hội về phương diện nào?",
+                options: {
+                    A: "Chính trị.",
+                    B: "Kinh tế.",
+                    C: "Xã hội.",
+                    D: "Văn hóa - tư tưởng."
+                },
+                answer: "B"
+            },
+            {
+                id: 71,
+                question: "Điền từ vào chỗ trống để hoàn thành luận điểm của V.I. Lênin: 'Từ chủ nghĩa tư bản, nhân loại chỉ có thể tiến thẳng lên chủ nghĩa xã hội, nghĩa là lên chế độ ... về các tư liệu sản xuất và chế độ phân phối sản phẩm theo lao động của mỗi người'.",
+                options: {
+                    A: "tư hữu.",
+                    B: "tư nhân.",
+                    C: "công hữu.",
+                    D: "sở hữu."
+                },
+                answer: "C"
+            },
+            {
+                id: 72,
+                question: "Theo chủ nghĩa xã hội khoa học, đặc trưng thể hiện thuộc tính bản chất của chủ nghĩa xã hội là",
+                options: {
+                    A: "giải phóng giai cấp, giải phóng dân tộc, giải phóng xã hội, giải phóng con người, tạo điều kiện để con người phát triển toàn diện.",
+                    B: "có nền kinh tế phát triển cao dựa trên lực lượng sản xuất hiện đại và chế độ công hữu về tư liệu sản xuất chủ yếu.",
+                    C: "chế độ xã hội do nhân dân lao động làm chủ.",
+                    D: "Tất cả các đáp án đều đúng."
+                },
+                answer: "A"
+            },
+            {
+                id: 73,
+                question: "Theo V.I. Lênin, nhà nước nào lần đầu tiên thực hiện dân chủ cho người nghèo, cho nhân dân?",
+                options: {
+                    A: "Nhà nước chuyên chính tư sản.",
+                    B: "Nhà nước phong kiến.",
+                    C: "Nhà nước chuyên chính vô sản.",
+                    D: "Nhà nước chiếm hữu nô lệ."
+                },
+                answer: "C"
+            },
+            {
+                id: 74,
+                question: "Theo chủ nghĩa xã hội khoa học, đặc trưng bản chất thể hiện ở lĩnh vực văn hóa - tinh thần của chủ nghĩa xã hội là",
+                options: {
+                    A: "do nhân dân lao động làm chủ.",
+                    B: "có nhà nước kiểu mới mang bản chất giai cấp công nhân, đại biểu cho lợi ích, quyền lực và ý chí của nhân dân lao động.",
+                    C: "có nền văn hóa phát triển cao, kế thừa và phát huy những giá trị của văn hóa dân tộc và tinh hoa văn hóa nhân loại.",
+                    D: "bảo đảm bình đẳng, đoàn kết giữa các dân tộc và có quan hệ hữu nghị, hợp tác với nhân dân các nước trên thế giới."
+                },
+                answer: "C"
+            },
+            {
+                id: 75,
+                question: "Theo chủ nghĩa Mác - Lênin, quá độ trực tiếp từ chủ nghĩa tư bản lên chủ nghĩa cộng sản đối với những nước có trình độ phát triển như thế nào?",
+                options: {
+                    A: "Chưa trải qua chủ nghĩa tư bản phát triển.",
+                    B: "Tiền tư bản chủ nghĩa.",
+                    C: "Đã trải qua chủ nghĩa tư bản phát triển.",
+                    D: "Tất cả các đáp án trên đều đúng."
+                },
+                answer: "C"
+            },
+            {
+                id: 76,
+                question: "Theo chủ nghĩa Mác - Lênin, quá độ gián tiếp từ chủ nghĩa tư bản lên chủ nghĩa cộng sản đối với những nước có trình độ phát triển như thế nào?",
+                options: {
+                    A: "Chưa trải qua chủ nghĩa tư bản phát triển.",
+                    B: "Đã trải qua chủ nghĩa tư bản phát triển.",
+                    C: "Chủ nghĩa tư bản phát triển cao.",
+                    D: "Tất cả các đáp án trên đều đúng."
+                },
+                answer: "A"
+            },
+            {
+                id: 77,
+                question: "Thực chất của thời kỳ quá độ lên chủ nghĩa xã hội là",
+                options: {
+                    A: "thời kỳ tiếp nối cách mạng từ tư bản chủ nghĩa sang xã hội xã hội chủ nghĩa.",
+                    B: "thời kỳ giai cấp vô sản đập tan bộ máy nhà nước của giai cấp tư sản.",
+                    C: "thời kỳ giành chính quyền của giai cấp công nhân.",
+                    D: "thời kỳ cải biến cách mạng từ xã hội tiền tư bản chủ nghĩa và tư bản chủ nghĩa sang xã hội xã hội chủ nghĩa."
+                },
+                answer: "D"
+            },
+            {
+                id: 78,
+                question: "Theo chủ nghĩa xã hội khoa học, đặc điểm cơ bản của thời kỳ quá độ lên chủ nghĩa xã hội là thời kỳ cải tạo cách mạng xã hội tư bản chủ nghĩa trên lĩnh vực nào?",
+                options: {
+                    A: "Kinh tế.",
+                    B: "Chính trị.",
+                    C: "Văn hóa, xã hội.",
+                    D: "Bao gồm tất cả các đáp án."
+                },
+                answer: "D"
+            },
+            {
+                id: 79,
+                question: "Theo chủ nghĩa xã hội khoa học, thời kỳ quá độ lên chủ nghĩa xã hội bắt đầu và kết thúc khi nào?",
+                options: {
+                    A: "Từ khi giai cấp công nhân và nhân dân lao động tiến hành đấu tranh cách mạng.",
+                    B: "Từ khi cách mạng công nghiệp thành công đến khi giai cấp công nhân và nhân dân lao động giành chính quyền.",
+                    C: "Từ khi giai cấp tư sản giành được chính quyền đến khi xây dựng thành công chủ nghĩa xã hội.",
+                    D: "Từ khi giai cấp công nhân và nhân dân lao động giành được chính quyền đến khi xây dựng thành công chủ nghĩa xã hội."
+                },
+                answer: "D"
+            },
+            {
+                id: 80,
+                question: "Trên lĩnh vực kinh tế, đặc điểm cơ bản của thời kỳ quá độ lên chủ nghĩa xã hội là",
+                options: {
+                    A: "tồn tại một thành phần kinh tế.",
+                    B: "tồn tại nhiều nền kinh tế.",
+                    C: "xây dựng nhà nước chuyên chính vô sản.",
+                    D: "thiết lập, tăng cường chuyên chính tư sản."
+                },
+                answer: "D"
+            }
+        ];
+
+        function shuffleArray(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+            return array;
+        }
+
+        function checkAnswer(btn, correctAnswer) {
+            const selectedAnswer = btn.dataset.option;
+            const isCorrect = selectedAnswer === correctAnswer;
+
+            if (isCorrect) {
+                btn.classList.add('correct');
+                // Nếu đúng, có thể disable các nút còn lại của câu này nếu muốn
+                // Nhưng yêu cầu là nếu sai cho chọn lại, đúng thì bôi xanh.
+                const parentDiv = btn.parentElement;
+                const buttons = parentDiv.querySelectorAll('button');
+                buttons.forEach(b => {
+                    b.disabled = true; // Khóa các nút khác sau khi đã chọn đúng
+                    if(b.dataset.option !== correctAnswer && !b.classList.contains('incorrect')) {
+                       b.style.opacity = '0.5';
+                    }
+                });
+            } else {
+                btn.classList.add('incorrect');
+                btn.disabled = true; // Không cho click lại vào nút đã sai
+            }
+        }
+
+        function renderQuiz() {
+            const container = document.getElementById('quiz-container');
+            container.innerHTML = ''; // Clear loading text
+
+            // Shuffle toàn bộ câu hỏi
+            const shuffledQuestions = shuffleArray([...questionsData]);
+
+            shuffledQuestions.forEach((q, index) => {
+                const questionCard = document.createElement('div');
+                questionCard.className = "bg-white p-6 rounded-xl shadow-sm border border-gray-100";
+
+                const questionTitle = document.createElement('h3');
+                questionTitle.className = "text-lg font-semibold text-gray-800 mb-4";
+                questionTitle.innerHTML = `<span class="text-blue-600">Câu ${index + 1}:</span> ${q.question}`;
+                
+                const optionsContainer = document.createElement('div');
+                optionsContainer.className = "flex flex-col space-y-3";
+
+                // Không xáo trộn đáp án A, B, C, D để dễ theo dõi
+                const optionKeys = ['A', 'B', 'C', 'D'];
+                
+                optionKeys.forEach(key => {
+                    if (q.options[key]) {
+                        const btn = document.createElement('button');
+                        btn.className = "option-btn w-full text-left p-3 rounded-lg border border-gray-200 hover:bg-gray-50 focus:outline-none";
+                        btn.dataset.option = key;
+                        btn.innerHTML = `<span class="font-bold mr-2">${key}.</span> ${q.options[key]}`;
+                        
+                        btn.onclick = () => checkAnswer(btn, q.answer);
+                        
+                        optionsContainer.appendChild(btn);
+                    }
+                });
+
+                questionCard.appendChild(questionTitle);
+                questionCard.appendChild(optionsContainer);
+                container.appendChild(questionCard);
+            });
+        }
+
+        window.onload = () => {
+            renderQuiz();
+        };
+    </script>
+</body>
+</html>
