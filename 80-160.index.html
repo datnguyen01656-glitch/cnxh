@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ôn Tập Trắc Nghiệm</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f7f6;
+      color: #333;
+      padding: 20px;
+      margin: 0;
+    }
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+      background: #fff;
+      padding: 20px 30px;
+      border-radius: 8px;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    }
+    h1 {
+      text-align: center;
+      color: #0056b3;
+    }
+    .question-block {
+      margin-bottom: 25px;
+      padding-bottom: 20px;
+      border-bottom: 1px solid #eee;
+    }
+    .question-title {
+      font-weight: bold;
+      font-size: 1.1em;
+      margin-bottom: 12px;
+      line-height: 1.4;
+    }
+    .option {
+      display: block;
+      padding: 12px;
+      margin: 8px 0;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      cursor: pointer;
+      background: #fafafa;
+      transition: all 0.2s ease-in-out;
+    }
+    .option:hover {
+      background: #e9ecef;
+    }
+    .correct {
+      background-color: #d4edda !important;
+      border-color: #c3e6cb !important;
+      color: #155724;
+      pointer-events: none; /* Khóa nút khi chọn đúng */
+    }
+    .incorrect {
+      background-color: #f8d7da !important;
+      border-color: #f5c6cb !important;
+      color: #721c24;
+    }
+    #resetBtn {
+      display: block;
+      width: 100%;
+      padding: 15px;
+      font-size: 1.1em;
+      color: #fff;
+      background-color: #28a745;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      margin-top: 30px;
+      font-weight: bold;
+    }
+    #resetBtn:hover {
+      background-color: #218838;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <h1>Ôn Tập Trắc Nghiệm (Câu 81 - 160)</h1>
+    <div id="quiz-container"></div>
+    <button id="resetBtn">Xáo trộn và Làm lại từ đầu</button>
+  </div>
+
+  <script>
+    // Dữ liệu đã được làm sạch, sửa các lỗi chính tả và nhận diện chữ (OCR) từ đề bài
+    const quizData = [
+      { id: 81, q: "Câu 81. Đặc điểm cơ bản của thời kỳ quá độ lên chủ nghĩa xã hội trên lĩnh vực chính trị là", opts: ["A. thiết lập, tăng cường chuyên chính vô sản.", "B. giai cấp công nhân dùng bạo lực cách mạng để giành chính quyền.", "C. xây dựng nền kinh tế nhiều thành phần.", "D. thiết lập, tăng cường chuyên chính tư sản."], ans: 0 },
+      { id: 82, q: "Câu 82. Thực chất việc thiết lập, tăng cường chuyên chính vô sản là", opts: ["A. Giai cấp công nhân nắm quyền lực nhà nước.", "B. Giai cấp công nhân sử dụng quyền lực nhà nước trấn áp giai cấp tư sản.", "C. Giai cấp công nhân tiến hành xây dựng một xã hội không giai cấp.", "D. Bao gồm tất cả các đáp án trên."], ans: 3 },
+      { id: 83, q: "Câu 83. Thực chất việc thiết lập, tăng cường chuyên chính vô sản là", opts: ["A. Giai cấp công nhân nắm và sử dụng quyền lực nhà nước trấn áp giai cấp vô sản.", "B. Giai cấp công nhân nắm và sử dụng quyền lực nhà nước trấn áp giai cấp tư sản, tiến hành xây dựng một xã hội không giai cấp.", "C. Xây dựng Đảng để lãnh đạo cách mạng.", "D. Tăng cường ý thức hệ của tất cả các giai cấp."], ans: 1 },
+      { id: 84, q: "Câu 84. Đặc điểm cơ bản của thời kỳ quá độ lên chủ nghĩa xã hội trên lĩnh vực tư tưởng - văn hóa là", opts: ["A. tồn tại nhiều tư tưởng khác nhau, chủ yếu là tư tưởng vô sản và tư tưởng tư sản.", "B. giai cấp công nhân thông qua Đảng Cộng sản từng bước xây dựng văn hóa vô sản.", "C. tiếp thu giá trị văn hóa dân tộc và tinh hoa văn hóa nhân loại.", "D. Bao gồm tất cả các đáp án trên."], ans: 3 },
+      { id: 85, q: "Câu 85. Đặc điểm cơ bản của thời kỳ quá độ lên chủ nghĩa xã hội trên lĩnh vực xã hội là", opts: ["A. tồn tại nhiều giai cấp, tầng lớp; các giai cấp, tầng lớp vừa hợp tác, vừa đấu tranh với nhau.", "B. tồn tại nền kinh tế nhiều thành phần, trong đó có thành phần kinh tế đối lập.", "C. tồn tại nhiều tư tưởng khác nhau, chủ yếu là tư tưởng vô sản và tư tưởng tư sản.", "D. Bao gồm tất cả các đáp án trên."], ans: 0 },
+      { id: 86, q: "Câu 86. Đặc điểm cơ bản của thời kỳ quá độ lên chủ nghĩa xã hội trên lĩnh vực xã hội là", opts: ["A. thời kỳ đấu tranh giai cấp chống áp bức, bất công.", "B. xóa bỏ tệ nạn xã hội và những tàn dư của xã hội cũ để lại.", "C. thiết lập công bằng xã hội trên cơ sở thực hiện nguyên tắc phân phối theo lao động là chủ đạo.", "D. Bao gồm tất cả các đáp án trên."], ans: 3 },
+      { id: 87, q: "Câu 87. Việt Nam tiến lên chủ nghĩa xã hội trong điều kiện vừa thuận lợi, vừa khó khăn đan xen, với những đặc trưng cơ bản nào?", opts: ["A. Bao gồm tất cả các đáp án trên.", "B. Xuất phát từ một xã hội vốn là thuộc địa, nửa phong kiến, lực lượng sản xuất rất thấp.", "C. Cuộc cách mạng khoa học và công nghệ hiện đại đang diễn ra mạnh mẽ, cuốn hút tất cả các nước.", "D. Thời đại ngày nay vẫn là thời đại quá độ từ chủ nghĩa tư bản lên chủ nghĩa xã hội."], ans: 0 },
+      { id: 88, q: "Câu 88. Hình thức phân phối chủ đạo trong thời kỳ quá độ lên chủ nghĩa xã hội ở Việt Nam là", opts: ["A. phân phối theo nhu cầu.", "B. phân phối theo lao động.", "C. phân phối theo yêu cầu.", "D. phân phối theo nhu cầu, mức độ đóng góp và quỹ phúc lợi xã hội."], ans: 1 },
+      { id: 89, q: "Câu 89. Hình thức phân phối trong thời kỳ quá độ lên chủ nghĩa xã hội ở Việt Nam là", opts: ["A. phân phối theo lao động.", "B. phân phối theo mức độ đóng góp.", "C. phân phối theo quỹ phúc lợi xã hội.", "D. Bao gồm tất cả các đáp án trên."], ans: 3 },
+      { id: 90, q: "Câu 90. Cương lĩnh xây dựng đất nước trong thời kỳ quá độ lên chủ nghĩa xã hội (1991) xác định hai nhiệm vụ chiến lược của cách mạng Việt Nam là", opts: ["A. xây dựng Đảng trong sạch, vững mạnh và bảo vệ Đảng.", "B. xây dựng Nhà nước pháp quyền và thực thi dân chủ.", "C. phát triển kinh tế và đảm bảo công bằng xã hội.", "D. xây dựng chủ nghĩa xã hội và bảo vệ Tổ quốc."], ans: 3 },
+      { id: 91, q: "Câu 91. Thuật ngữ \"Demoskratos\" trong tiếng Hy Lạp cổ đại có nghĩa là", opts: ["A. nhân dân cai trị.", "B. quyền lực thuộc về số đông.", "C. cai trị nhân dân.", "D. quyền lực thuộc về thiểu số."], ans: 0 },
+      { id: 92, q: "Câu 92. Theo chủ nghĩa xã hội khoa học, trên phương diện chế độ xã hội và trong lĩnh vực chính trị, dân chủ là", opts: ["A. một nguyên tắc - nguyên tắc dân chủ.", "B. một hình thức hay hình thái nhà nước.", "C. một giá trị xã hội mang tính toàn nhân loại.", "D. một phạm trù vĩnh viễn."], ans: 1 },
+      { id: 93, q: "Câu 93. Theo chủ nghĩa Mác - Lênin, dân chủ với tư cách là một hình thức tổ chức thiết chế chính trị là một phạm trù lịch sử?", opts: ["A. Ra đời và phát triển không gắn liền với nhà nước.", "B. Ra đời không gắn liền với nhà nước và mất đi khi nhà nước tiêu vong.", "C. Ra đời và phát triển gắn liền với nhà nước và mất đi khi nhà nước tiêu vong.", "D. Ra đời và phát triển không gắn liền với nhà nước và không mất đi khi nhà nước tiêu vong."], ans: 2 },
+      { id: 94, q: "Câu 94. Theo chủ nghĩa xã hội khoa học, trên phương diện tổ chức và quản lý xã hội, dân chủ là", opts: ["A. một hình thức hay hình thái nhà nước.", "B. một giá trị xã hội mang tính toàn nhân loại.", "C. một nguyên tắc - nguyên tắc tập trung.", "D. một nguyên tắc - nguyên tắc dân chủ."], ans: 3 },
+      { id: 95, q: "Câu 95. Điền vào chỗ trống để hoàn thành câu nói của Hồ Chí Minh: \"Nước ta là nước dân chủ, địa vị cao nhất là dân, vì...\".", opts: ["A. dân là chủ.", "B. công nhân là chủ.", "C. nông dân là chủ.", "D. nhân dân lao động là chủ."], ans: 0 },
+      { id: 96, q: "Câu 96. Theo chủ nghĩa xã hội khoa học, dân chủ được thể hiện trong những lĩnh vực nào?", opts: ["A. Chính trị.", "B. Kinh tế.", "C. Văn hóa - xã hội.", "D. Bao gồm tất cả các đáp án trên."], ans: 3 },
+      { id: 97, q: "Câu 97. Theo chủ nghĩa xã hội khoa học, trong lịch sử nhân loại chế độ nào đã thủ tiêu nền dân chủ?", opts: ["A. Tư sản.", "B. Chiếm hữu nô lệ.", "C. Phong kiến.", "D. Tất cả các đáp án trên đều sai."], ans: 2 },
+      { id: 98, q: "Câu 98. Theo chủ nghĩa xã hội khoa học, các nền dân chủ trong lịch sử là", opts: ["A. dân chủ nguyên thủy, dân chủ chủ nô, dân chủ phong kiến.", "B. dân chủ chủ nô, dân chủ phong kiến, dân chủ xã hội chủ nghĩa.", "C. dân chủ tư sản, dân chủ xã hội chủ nghĩa, dân chủ cộng sản chủ nghĩa.", "D. dân chủ chủ nô, dân chủ tư sản, dân chủ xã hội chủ nghĩa."], ans: 3 },
+      { id: 99, q: "Câu 99. Nền dân chủ xã hội chủ nghĩa chính thức được xác lập khi nào?", opts: ["A. Cách mạng Tháng Mười Nga năm 1917.", "B. Công xã Paris năm 1871.", "C. Chiến tranh thế giới lần thứ hai kết thúc năm 1945.", "D. Cách mạng tháng Tám năm 1945 thành công."], ans: 0 },
+      { id: 100, q: "Câu 100. Ai là người đưa ra quan điểm về sự tự tiêu vong của nền dân chủ xã hội chủ nghĩa?", opts: ["A. C. Mác.", "B. V.I. Lênin.", "C. Ph. Ăngghen.", "D. Hồ Chí Minh."], ans: 1 },
+      { id: 101, q: "Câu 101. So với các nền dân chủ có trong lịch sử nhân loại, nền dân chủ xã hội chủ nghĩa cao hơn về", opts: ["A. lượng.", "B. độ.", "C. chất.", "D. Tất cả các đáp án trên đều sai."], ans: 2 },
+      { id: 102, q: "Câu 102. Đặc điểm cơ bản của nền dân chủ xã hội chủ nghĩa là", opts: ["A. mọi quyền lực thuộc về giai cấp công nhân.", "B. mọi quyền lực thuộc về giai cấp nông dân.", "C. mọi quyền lực thuộc về người lãnh đạo.", "D. mọi quyền lực thuộc về nhân dân."], ans: 3 },
+      { id: 103, q: "Câu 103. Theo chủ nghĩa xã hội khoa học, nền dân chủ xã hội chủ nghĩa mang bản chất của giai cấp nào?", opts: ["A. Giai cấp công nhân.", "B. Tầng lớp trí thức.", "C. Quần chúng nhân dân.", "D. Giai cấp nông dân."], ans: 0 },
+      { id: 104, q: "Câu 104. Theo chủ nghĩa xã hội khoa học, bản chất kinh tế của nền dân chủ xã hội chủ nghĩa", opts: ["A. là chế độ sở hữu xã hội về những tư liệu sản xuất chủ yếu của xã hội.", "B. là chế độ sở hữu nhà nước về tư liệu sản xuất chủ yếu.", "C. là chế độ sở hữu tư nhân về tư liệu sản xuất chủ yếu.", "D. là chế độ triệt tiêu sự cạnh tranh trong kinh tế, loại trừ sự bất công."], ans: 0 },
+      { id: 105, q: "Câu 105. Thực hiện chế độ phân phối lợi ích theo kết quả lao động là chủ yếu thể hiện bản chất nào của nền dân chủ xã hội chủ nghĩa?", opts: ["A. Bản chất kinh tế.", "B. Bản chất chính trị.", "C. Bản chất tư tưởng - văn hóa.", "D. Bản chất xã hội."], ans: 0 },
+      { id: 106, q: "Câu 106. Theo chủ nghĩa xã hội khoa học, bản chất tư tưởng - văn hóa - xã hội của nền dân chủ xã hội chủ nghĩa là", opts: ["A. được xây dựng trên nền tảng sản xuất công nghiệp hiện đại, một xã hội nhân văn, nhân đạo", "B. lấy hệ tư tưởng Mác - Lênin - hệ tư tưởng của giai cấp công nhân làm chủ đạo đối với mọi hình thái ý thức xã hội khác trong xã hội mới", "C. được phản ánh đúng quy luật phát triển của xã hội, dưới sự chỉ đạo của Đảng", "D. Tất cả các đáp án trên đều sai."], ans: 1 },
+      { id: 107, q: "Câu 107. Bản chất tư tưởng - văn hóa - xã hội của nền dân chủ xã hội chủ nghĩa là", opts: ["A. Tất cả các đáp án trên đều đúng.", "B. lấy hệ tư tưởng Mác - Lênin làm chủ đạo đối với mọi hình thái ý thức xã hội khác.", "C. kế thừa, phát huy những tinh hoa văn hóa truyền thống dân tộc.", "D. tiếp thu những giá trị tư tưởng - văn hóa, văn minh, tiến bộ xã hội... mà nhân loại đã tạo ra."], ans: 1 },
+      { id: 108, q: "Câu 108. Theo chủ nghĩa xã hội khoa học, điều kiện tiên quyết để dân chủ xã hội chủ nghĩa ra đời, tồn tại và phát triển là", opts: ["A. đảm bảo bản chất kinh tế của dân chủ xã hội chủ nghĩa.", "B. đảm bảo vai trò lãnh đạo duy nhất của Đảng Cộng sản.", "C. xây dựng nhà nước pháp quyền xã hội chủ nghĩa.", "D. đảm bảo quyền lực thuộc về nhân dân."], ans: 1 },
+      { id: 109, q: "Câu 109. Cuộc cách mạng do giai cấp vô sản và nhân dân lao động tiến hành dưới sự lãnh đạo của Đảng Cộng sản dẫn đến kết quả", opts: ["A. sự ra đời của nhà nước phong kiến.", "B. sự ra đời của nhà nước xã hội chủ nghĩa.", "C. sự ra đời của nhà nước tư sản.", "D. sự ra đời của nhà nước."], ans: 1 },
+      { id: 110, q: "Câu 110. Nhà nước xã hội chủ nghĩa là", opts: ["A. một kiểu nhà nước mà ở đó, sự thống trị chính trị thuộc về giai cấp công nhân.", "B. do cách mạng xã hội chủ nghĩa sản sinh ra.", "C. có sứ mệnh xây dựng thành công chủ nghĩa xã hội, đưa nhân dân lao động lên địa vị làm chủ trên tất cả các mặt của đời sống xã hội.", "D. Bao gồm tất cả các đáp án trên."], ans: 3 },
+      { id: 111, q: "Câu 111. Theo chủ nghĩa xã hội khoa học, nhà nước xã hội chủ nghĩa mang bản chất của giai cấp nào?", opts: ["A. Giai cấp nông dân.", "B. Nhân dân lao động.", "C. Giai cấp công nhân.", "D. Tầng lớp trí thức."], ans: 2 },
+      { id: 112, q: "Câu 112. Theo chủ nghĩa xã hội khoa học, bản chất kinh tế của nhà nước xã hội chủ nghĩa chịu sự quy định của", opts: ["A. chế độ sở hữu tư nhân về tư liệu sản xuất chủ yếu.", "B. chế độ sở hữu tàn dư về tư liệu sản xuất chủ yếu.", "C. chế độ sở hữu xã hội về tư liệu sản xuất chủ yếu.", "D. chế độ sở hữu cá thể về tư liệu sản xuất chủ yếu."], ans: 2 },
+      { id: 113, q: "Câu 113. Về phương diện kinh tế, mục tiêu hàng đầu của nhà nước xã hội chủ nghĩa là", opts: ["A. chăm lo cho lợi ích của giai cấp nông dân.", "B. chăm lo cho lợi ích của giai cấp tư sản.", "C. chăm lo cho lợi ích của đại đa số nhân dân lao động.", "D. chăm lo cho lợi ích của tầng lớp trí thức."], ans: 2 },
+      { id: 114, q: "Câu 114. Theo chủ nghĩa xã hội khoa học, về phương diện văn hóa, xã hội, nhà nước xã hội chủ nghĩa được xây dựng trên nền tảng tinh thần", opts: ["A. lý luận của chủ nghĩa Mác - Lênin.", "B. những giá trị văn hóa tiên tiến của nhân loại.", "C. những bản sắc riêng của dân tộc.", "D. Bao gồm tất cả các đáp án."], ans: 3 },
+      { id: 115, q: "Câu 115. Theo chủ nghĩa xã hội khoa học, căn cứ vào tính chất của quyền lực nhà nước, chức năng của nhà nước xã hội chủ nghĩa được chia thành", opts: ["A. chức năng đối nội và chức năng đối ngoại.", "B. chức năng đối nội và chức năng chính trị.", "C. chức năng giai cấp và chức năng xã hội.", "D. chức năng kinh tế và chức năng chính trị."], ans: 2 },
+      { id: 116, q: "Câu 116. Theo chủ nghĩa xã hội khoa học, căn cứ vào phạm vi tác động của quyền lực nhà nước, chức năng của nhà nước xã hội chủ nghĩa được chia thành", opts: ["A. chức năng giai cấp và chức năng xã hội.", "B. chức năng đối nội và chức năng chính trị.", "C. chức năng kinh tế và chức năng chính trị.", "D. chức năng đối nội và chức năng đối ngoại."], ans: 3 },
+      { id: 117, q: "Câu 117. Theo chủ nghĩa xã hội khoa học, căn cứ vào lĩnh vực tác động của quyền lực nhà nước, chức năng của nhà nước xã hội chủ nghĩa được chia thành", opts: ["A. chức năng giai cấp và chức năng xã hội.", "B. chức năng đối nội và chức năng chính trị.", "C. chức năng đối nội và chức năng đối ngoại.", "D. chức năng chính trị, kinh tế, văn hóa, xã hội."], ans: 3 },
+      { id: 118, q: "Câu 118. Theo chủ nghĩa xã hội khoa học, một trong những nội dung thể hiện mối quan hệ giữa dân chủ xã hội chủ nghĩa và nhà nước xã hội chủ nghĩa là gì?", opts: ["A. Dân chủ xã hội chủ nghĩa là cơ sở, nền móng cho việc xây dựng và hoạt động của nhà nước.", "B. Dân chủ là công cụ, nền móng cho việc xây dựng và hoạt động của nhà nước xã hội chủ nghĩa.", "C. Dân chủ xã hội chủ nghĩa là công cụ, phương tiện cho việc hoạt động của nhà nước xã hội chủ nghĩa.", "D. Dân chủ xã hội chủ nghĩa là cơ sở, nền tảng cho việc xây dựng và hoạt động của nhà nước xã hội chủ nghĩa."], ans: 3 },
+      { id: 119, q: "Câu 119. Theo chủ nghĩa xã hội khoa học, một trong những nội dung thể hiện mối quan hệ giữa dân chủ xã hội chủ nghĩa và nhà nước xã hội chủ nghĩa là gì?", opts: ["A. Nhà nước xã hội chủ nghĩa trở thành công cụ quan trọng cho việc thực thi quyền làm chủ của người dân.", "B. Nhà nước xã hội chủ nghĩa trở thành nền tảng quan trọng cho việc thực thi quyền làm chủ của giai cấp công nhân.", "C. Nhà nước xã hội chủ nghĩa trở thành cơ sở quan trọng cho việc thực thi quyền làm chủ của giai cấp nông dân.", "D. Tất cả các đáp án trên đều sai."], ans: 0 },
+      { id: 120, q: "Câu 120. Điền vào chỗ trống để hoàn thành quan điểm của Đảng Cộng sản Việt Nam: \"Lấy..., xây dựng và phát huy quyền làm chủ của nhân dân lao động\".", opts: ["A. nông dân làm gốc.", "B. trí thức làm gốc.", "C. vô sản làm gốc.", "D. dân làm gốc."], ans: 3 },
+      { id: 121, q: "Câu 121. Ở Việt Nam, hình thức dân chủ gián tiếp là", opts: ["A. hình thức dân chủ đại diện, được thực hiện do nhân dân \"ủy quyền\", giao quyền lực của mình cho tổ chức mà nhân dân trực tiếp bầu ra.", "B. hình thức thông qua đó, nhân dân bằng hành động trực tiếp của mình thực hiện quyền làm chủ nhà nước và xã hội.", "C. hình thức dân chủ gián tiếp, được thực hiện do nhân dân \"ủy quyền\", giao quyền lực của mình cho tổ chức mà nhân dân gián tiếp bầu ra.", "D. Tất cả các đáp án trên đều đúng."], ans: 0 },
+      { id: 122, q: "Câu 122. Ở Việt Nam, hình thức dân chủ nào được thực hiện do nhân dân \"ủy quyền\", giao quyền lực của mình cho tổ chức mà nhân dân trực tiếp bầu ra?", opts: ["A. Dân chủ trực tiếp.", "B. Dân chủ gián tiếp.", "C. Dân chủ bán gián tiếp.", "D. Dân chủ bán trực tiếp."], ans: 1 },
+      { id: 123, q: "Câu 123. Ở Việt Nam, hình thức dân chủ nào mà thông qua đó, nhân dân bằng hành động trực tiếp của mình thực hiện quyền làm chủ nhà nước và xã hội?", opts: ["A. Dân chủ gián tiếp.", "B. Dân chủ bán gián tiếp.", "C. Dân chủ trực tiếp.", "D. Dân chủ bán trực tiếp."], ans: 2 },
+      { id: 124, q: "Câu 124. Theo quan niệm chung, nhà nước pháp quyền là", opts: ["A. nhà nước độc tài chuyên chế.", "B. nhà nước tôn giáo.", "C. nhà nước tước đoạt tự do của người dân.", "D. nhà nước thượng tôn pháp luật."], ans: 3 },
+      { id: 125, q: "Câu 125. Quan điểm về quyền lực nhà nước được Đảng ta nhấn mạnh trong Đại hội XIII là gì?", opts: ["A. Quyền lực nhà nước là thống nhất.", "B. Có sự phân công rành mạch, phối hợp chặt chẽ.", "C. Tăng cường kiểm soát quyền lực nhà nước.", "D. Bao gồm tất cả các đáp án trên."], ans: 3 },
+      { id: 126, q: "Câu 126. Một trong những đặc điểm của Nhà nước pháp quyền xã hội chủ nghĩa Việt Nam là", opts: ["A. nhà nước được tổ chức và hoạt động dựa trên nguyện vọng của giai cấp tư sản.", "B. nhà nước được tổ chức và hoạt động dựa trên cơ sở của Hiến pháp và pháp luật.", "C. nhà nước được tổ chức và hoạt động dựa trên nguyện vọng của giai cấp nông dân.", "D. nhà nước được tổ chức và hoạt động dựa trên cơ sở tư tưởng của tầng lớp trí thức."], ans: 1 },
+      { id: 127, q: "Câu 127. Nhà nước pháp quyền xã hội chủ nghĩa Việt Nam do cơ quan nào lãnh đạo?", opts: ["A. Quốc hội.", "B. Mặt trận Tổ quốc Việt Nam.", "C. Đảng Cộng sản Việt Nam.", "D. Chính phủ."], ans: 2 },
+      { id: 128, q: "Câu 128. Hoạt động của Nhà nước pháp quyền xã hội chủ nghĩa Việt Nam được giám sát bởi Nhân dân với phương châm", opts: ["A. nhà nước phục vụ công nhân, gắn bó mật thiết với công nhân.", "B. \"Dân biết, dân bàn, dân kiểm tra\" không thông qua các tổ chức.", "C. nhà nước phục vụ nông dân, gắn bó mật thiết với nông dân.", "D. \"Dân biết, dân bàn, dân làm, dân kiểm tra\" thông qua các tổ chức, các cá nhân được nhân dân ủy nhiệm."], ans: 3 },
+      { id: 129, q: "Câu 129. Nhà nước pháp quyền xã hội chủ nghĩa Việt Nam mang bản chất của giai cấp nào?", opts: ["A. Giai cấp công nhân.", "B. Giai cấp nông dân.", "C. Nhân dân lao động.", "D. Tầng lớp trí thức."], ans: 0 },
+      { id: 130, q: "Câu 130. Điều kiện tiên quyết để xây dựng nền dân chủ xã hội chủ nghĩa Việt Nam là", opts: ["A. xây dựng Nhà nước pháp quyền xã hội chủ nghĩa vững mạnh.", "B. xây dựng Đảng Cộng sản Việt Nam trong sạch, vững mạnh.", "C. nâng cao vai trò của các tổ chức chính trị - xã hội.", "D. hoàn thiện các hệ thống giám sát, phản biện xã hội."], ans: 1 },
+      { id: 131, q: "Câu 131. Điền vào chỗ trống để hoàn thiện định nghĩa sau: \"Cơ cấu xã hội là những cộng đồng người cùng toàn bộ những... do sự tác động lẫn nhau của các cộng đồng ấy tạo nên\".", opts: ["A. mối liên hệ.", "B. mối quan hệ cá nhân.", "C. mối quan hệ xã hội.", "D. mối quan hệ tự nhiên."], ans: 2 },
+      { id: 132, q: "Câu 132. Môn Chủ nghĩa xã hội khoa học tập trung nghiên cứu cơ cấu xã hội - giai cấp vì", opts: ["A. đó là một trong những cơ sở để nghiên cứu vấn đề liên minh giai cấp, tầng lớp.", "B. đó là cơ sở để giai cấp tư sản thống trị các giai cấp còn lại.", "C. đó là cơ sở để giai cấp nông dân tiến hành đấu tranh lật đổ giai cấp tư sản.", "D. Bao gồm tất cả các đáp án trên."], ans: 0 },
+      { id: 133, q: "Câu 133. Khái niệm nào dùng để chỉ hệ thống các giai cấp, tầng lớp xã hội tồn tại khách quan trong một chế độ xã hội nhất định?", opts: ["A. Cơ cấu xã hội - giai cấp.", "B. Cơ cấu xã hội - dân cư.", "C. Cơ cấu xã hội - dân tộc.", "D. Cơ cấu xã hội - tôn giáo."], ans: 0 },
+      { id: 134, q: "Câu 134. Mối quan hệ nào đóng vai trò quyết định đến sự hình thành cơ cấu xã hội - giai cấp?", opts: ["A. Mối quan hệ về tổ chức quản lý quá trình sản xuất.", "B. Mối quan hệ về sở hữu tư liệu sản xuất.", "C. Mối quan hệ về địa vị chính trị - xã hội.", "D. Mối quan hệ về phân phối."], ans: 1 },
+      { id: 135, q: "Câu 135. Trong cơ cấu xã hội - giai cấp của thời kỳ quá độ lên chủ nghĩa xã hội bao gồm những giai cấp, tầng lớp nào?", opts: ["A. Giai cấp công nhân, giai cấp nông dân, tầng lớp trí thức.", "B. Tầng lớp doanh nhân, tầng lớp tiểu chủ.", "C. Tầng lớp thanh niên, phụ nữ.", "D. Bao gồm tất cả các đáp án trên."], ans: 3 },
+      { id: 136, q: "Câu 136. Cơ cấu xã hội - giai cấp trong thời kỳ quá độ lên chủ nghĩa xã hội đặt dưới sự lãnh đạo của tổ chức nào?", opts: ["A. Đảng dân chủ.", "B. Đoàn thanh niên.", "C. Đội tiền phong của giai cấp nông dân.", "D. Đảng Cộng sản."], ans: 3 },
+      { id: 137, q: "Câu 137. Vì sao cơ cấu xã hội - giai cấp có vị trí quan trọng hàng đầu trong cơ cấu xã hội?", opts: ["A. Cơ cấu xã hội - giai cấp liên quan đến các đảng phái chính trị và nhà nước.", "B. Cơ cấu xã hội - giai cấp liên quan đến quyền sở hữu tư liệu sản xuất.", "C. Cơ cấu xã hội - giai cấp liên quan đến quản lý tổ chức lao động và vấn đề phân phối thu nhập.", "D. Bao gồm tất cả các đáp án trên."], ans: 3 },
+      { id: 138, q: "Câu 138. Sự biến đổi của cơ cấu xã hội - giai cấp tất yếu sẽ dẫn đến", opts: ["A. Chỉ ảnh hưởng và tác động đến sự biến đổi của cơ cấu dân cư.", "B. Ảnh hưởng và tác động đến toàn bộ cơ cấu xã hội.", "C. Không ảnh hưởng và không tác động đến sự biến đổi của các cơ cấu xã hội khác.", "D. Chỉ ảnh hưởng và tác động đến sự biến đổi của cơ cấu kinh tế."], ans: 1 },
+      { id: 139, q: "Câu 139. Căn cứ cơ bản để xây dựng chính sách phát triển kinh tế, văn hóa, xã hội của mỗi xã hội trong từng giai đoạn lịch sử cụ thể là", opts: ["A. cơ cấu xã hội tri thức.", "B. cơ cấu xã hội tiểu tư sản.", "C. cơ cấu xã hội - giai cấp.", "D. Tất cả các đáp án đều sai."], ans: 2 },
+      { id: 140, q: "Câu 140. Trong thời kỳ quá độ lên chủ nghĩa xã hội, cơ cấu xã hội - giai cấp biến đổi gắn liền và bị quy định bởi", opts: ["A. cơ cấu xã hội - giai cấp chủ nô.", "B. cơ cấu xã hội - giai cấp nô lệ.", "C. cơ cấu nền kinh tế tự cung tự cấp.", "D. cơ cấu kinh tế."], ans: 3 },
+      { id: 141, q: "Câu 141. Đối với những nước có xuất phát điểm thấp, khi bước vào thời kỳ quá độ lên chủ nghĩa xã hội, cơ cấu kinh tế sẽ biến đổi theo hướng", opts: ["A. tăng tỷ trọng công nghiệp và dịch vụ, giảm tỷ trọng nông nghiệp.", "B. hình thành các vùng, các trung tâm kinh tế lớn.", "C. phát triển lực lượng sản xuất với trình độ công nghệ cao, tiên tiến theo xu hướng ứng dụng những thành quả của cách mạng khoa học và công nghệ.", "D. Bao gồm tất cả các đáp án trên."], ans: 2 },
+      { id: 142, q: "Câu 142. Trong thời kỳ quá độ lên chủ nghĩa xã hội, sự biến đổi phức tạp, đa dạng của cơ cấu xã hội - giai cấp đã dẫn đến kết quả gì?", opts: ["A. Xuất hiện các tầng lớp xã hội mới", "B. Sự trở lại các giai cấp đã bị diệt vong", "C. Sự suy thoái của cơ chế kinh tế thị trường", "D. Bao gồm tất cả các đáp án trên."], ans: 0 },
+      { id: 143, q: "Câu 143. Trong thời kỳ quá độ lên chủ nghĩa xã hội, sự biến đổi phức tạp, đa dạng của cơ cấu xã hội - giai cấp làm xuất hiện các tầng lớp xã hội mới là do", opts: ["A. kết cấu kinh tế nhiều thành phần.", "B. kết cấu tôn giáo.", "C. kết cấu dân tộc.", "D. kết cấu kinh tế một thành phần."], ans: 0 },
+      { id: 144, q: "Câu 144. Quan hệ giữa các giai cấp, tầng lớp trong thời kỳ quá độ lên chủ nghĩa xã hội biến đổi như thế nào?", opts: ["A. Vừa đấu tranh, vừa liên minh, từng bước xóa bỏ bất bình đẳng", "B. Vừa liên minh, vừa tiêu diệt nhau, từng bước giành lợi ích về phe của mình.", "C. Vừa liên minh, vừa tranh giành quyền lãnh đạo Đảng Cộng sản.", "D. Tiêu diệt lẫn nhau vì lợi ích riêng của từng giai cấp."], ans: 0 },
+      { id: 145, q: "Câu 145. Xu hướng biến đổi của cơ cấu xã hội - giai cấp trong thời kỳ quá độ lên chủ nghĩa xã hội là", opts: ["A. xóa bỏ dần tình trạng bóc lột giai cấp trong xã hội, vươn tới những giá trị công bằng, bình đẳng.", "B. xóa bỏ dần liên minh giai cấp trong xã hội, vươn tới những giá trị công bằng, bất bình đẳng.", "C. xóa bỏ dần sự lãnh đạo của giai cấp công nhân trong xã hội, vươn tới sự tự do vô chính phủ.", "D. xóa bỏ dần tình trạng bóc lột giai cấp trong xã hội, vươn tới xây dựng xã hội do tầng lớp trí thức và nông dân nắm quyền."], ans: 0 },
+      { id: 146, q: "Câu 146. Theo C. Mác và Ph. Ăngghen, các cuộc đấu tranh của giai cấp công nhân ở nhiều quốc gia thất bại chủ yếu là do", opts: ["A. giai cấp công nhân không liên minh với giai cấp tư sản.", "B. giai cấp công nhân không tổ chức liên minh với giai cấp nông dân.", "C. giai cấp công nhân liên minh với giai cấp tư sản và tầng lớp trí thức.", "D. giai cấp công nhân liên minh với giai cấp tư sản và tầng lớp tiểu tư sản."], ans: 1 },
+      { id: 147, q: "Câu 147. Trong cách mạng xã hội chủ nghĩa, để giành thắng lợi giai cấp công nhân phải liên minh với", opts: ["A. giai cấp nông dân và giai cấp tư sản.", "B. giai cấp nông dân và các tầng lớp nhân dân lao động.", "C. giai cấp tư sản và các tập đoàn doanh nghiệp lớn.", "D. tầng lớp tri thức và các tổ chức chính trị của giai cấp tư sản."], ans: 1 },
+      { id: 148, q: "Câu 148. Trong cách mạng xã hội chủ nghĩa, giai cấp công nhân liên minh với giai cấp nông dân và các tầng lớp nhân dân lao động nhằm", opts: ["A. tạo sức mạnh tổng hợp đảm bảo cho thắng lợi của cuộc cách mạng xã hội chủ nghĩa.", "B. tạo sức mạnh tổng hợp đảm bảo cho thắng lợi của cuộc cách mạng tư sản.", "C. tạo sức mạnh tổng hợp đảm bảo cho thắng lợi của cuộc cách mạng tư bản chủ nghĩa.", "D. tạo sức mạnh tổng hợp đảm bảo cho thắng lợi của cuộc cách mạng địa chủ phong kiến."], ans: 0 },
+      { id: 149, q: "Câu 149. Theo V.I. Lênin, điều kiện để giai cấp vô sản có thể giữ được vai trò lãnh đạo và chính quyền nhà nước là", opts: ["A. duy trì khối liên minh giữa giai cấp vô sản và tư sản.", "B. duy trì khối liên minh giữa giai cấp vô sản và nông dân.", "C. duy trì khối liên minh giữa giai cấp vô sản và địa chủ phong kiến.", "D. duy trì khối liên minh giữa giai cấp tư sản và nông dân."], ans: 1 },
+      { id: 150, q: "Câu 150. Thực hiện tốt khối liên minh giai cấp, tầng lớp trong thời kỳ quá độ lên chủ nghĩa xã hội là cơ sở để", opts: ["A. xây dựng cơ sở kinh tế vững mạnh và củng cố chế độ chính trị phong kiến vững chắc.", "B. xây dựng cơ sở kinh tế vững mạnh và củng cố chế độ chính trị xã hội chủ nghĩa vững chắc.", "C. xây dựng cơ sở kinh tế vững mạnh và củng cố chế độ chính trị tư bản chủ nghĩa vững chắc.", "D. xây dựng cơ sở kinh tế vững mạnh và củng cố chế độ chính trị quân chủ chuyên chế vững chắc."], ans: 1 },
+      { id: 151, q: "Câu 151. Liên minh giai cấp, tầng lớp trong thời kỳ quá độ lên chủ nghĩa xã hội được hình thành xuất phát từ yêu cầu khách quan nào?", opts: ["A. Quá trình đẩy mạnh công nghiệp hóa, hiện đại hóa và chuyển dịch cơ cấu kinh tế.", "B. Phát triển công nghiệp, dịch vụ và khoa học - công nghệ.", "C. Xây dựng nền tảng vật chất - kỹ thuật cần thiết cho chủ nghĩa xã hội.", "D. Bao gồm tất cả các đáp án trên."], ans: 3 },
+      { id: 152, q: "Câu 152. Giai cấp, tầng lớp nào không thuộc cơ cấu xã hội - giai cấp của Việt Nam trong thời kỳ quá độ lên chủ nghĩa xã hội?", opts: ["A. Giai cấp công nhân.", "B. Giai cấp nông dân.", "C. Giai cấp địa chủ phong kiến.", "D. Tầng lớp trí thức."], ans: 2 },
+      { id: 153, q: "Câu 153. Trong thời kỳ quá độ lên chủ nghĩa xã hội ở Việt Nam, giai cấp nào có vai trò lãnh đạo?", opts: ["A. Giai cấp nông dân.", "B. Giai cấp tư sản.", "C. Giai cấp công nhân.", "D. Giai cấp địa chủ."], ans: 2 },
+      { id: 154, q: "Câu 154. Lực lượng đi đầu của quá trình phát triển kinh tế, tiến hành công nghiệp hóa, hiện đại hóa trong thời kỳ quá độ lên chủ nghĩa xã hội ở Việt Nam là", opts: ["A. giai cấp nông dân.", "B. đội ngũ doanh nhân.", "C. giai cấp công nhân.", "D. đội ngũ trí thức."], ans: 2 },
+      { id: 155, q: "Câu 155. Giai cấp nào ở vị trí chiến lược trong sự nghiệp công nghiệp hóa, hiện đại hóa nông nghiệp, nông thôn ở Việt Nam?", opts: ["A. Giai cấp công nhân.", "B. Tầng lớp trí thức.", "C. Giai cấp nông dân.", "D. Đội ngũ doanh nhân."], ans: 2 },
+      { id: 156, q: "Câu 156. Trong thời kỳ quá độ lên chủ nghĩa xã hội ở Việt Nam giai cấp nào có xu hướng giảm dần về số lượng và tỷ lệ trong cơ cấu xã hội - giai cấp?", opts: ["A. Giai cấp công nhân.", "B. Đội ngũ trí thức.", "C. Đội ngũ doanh nhân.", "D. Giai cấp nông dân."], ans: 3 },
+      { id: 157, q: "Câu 157. Trong thời kỳ quá độ lên chủ nghĩa xã hội ở Việt Nam, giai cấp nông dân có xu hướng biến đổi như thế nào trong cơ cấu xã hội - giai cấp?", opts: ["A. Tăng dần về số lượng và tỷ lệ trong cơ cấu xã hội - giai cấp.", "B. Giảm dần về số lượng và tăng dần về tỷ lệ trong cơ cấu xã hội - giai cấp.", "C. Không giảm về số lượng và tỷ lệ trong cơ cấu xã hội - giai cấp.", "D. Giảm dần về số lượng và tỷ lệ trong cơ cấu xã hội - giai cấp."], ans: 3 },
+      { id: 158, q: "Câu 158. Lực lượng lao động sáng tạo đặc biệt quan trọng trong tiến trình đẩy mạnh công nghiệp hóa, hiện đại hóa đất nước và hội nhập quốc tế, xây dựng kinh tế tri thức ở Việt Nam hiện nay là", opts: ["A. giai cấp công nhân.", "B. giai cấp nông dân.", "C. đội ngũ doanh nhân.", "D. đội ngũ trí thức."], ans: 3 },
+      { id: 159, q: "Câu 159. Nội dung của liên minh giai cấp, tầng lớp trong thời kỳ quá độ lên chủ nghĩa xã hội ở Việt Nam gồm những nội dung cơ bản nào?", opts: ["A. Nội dung kinh tế.", "B. Nội dung chính trị.", "C. Nội dung văn hóa - xã hội.", "D. Bao gồm tất cả các đáp án trên."], ans: 3 },
+      { id: 160, q: "Câu 160. Nội dung cơ bản quyết định nhất của liên minh giai cấp, tầng lớp trong thời kỳ quá độ lên chủ nghĩa xã hội ở Việt Nam là", opts: ["A. nội dung quốc phòng - an ninh.", "B. nội dung chính trị.", "C. nội dung văn hóa - xã hội.", "D. nội dung kinh tế."], ans: 3 }
+    ];
+
+    // Hàm trộn ngẫu nhiên một mảng (Thuật toán Fisher-Yates)
+    function shuffleArray(array) {
+      const newArr = [...array];
+      for (let i = newArr.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [newArr[i], newArr[j]] = [newArr[j], newArr[i]];
+      }
+      return newArr;
+    }
+
+    const container = document.getElementById("quiz-container");
+
+    // Hàm render (hiển thị) câu hỏi
+    function renderQuiz() {
+      container.innerHTML = "";
+      
+      // Xáo trộn thứ tự các câu hỏi
+      const shuffledQuiz = shuffleArray(quizData);
+
+      shuffledQuiz.forEach((item, qIndex) => {
+        const qBlock = document.createElement("div");
+        qBlock.className = "question-block";
+
+        const title = document.createElement("div");
+        title.className = "question-title";
+        title.textContent = `Câu ${qIndex + 1}: ` + item.q.replace(/^Câu \d+\. /, ""); 
+        qBlock.appendChild(title);
+
+        item.opts.forEach((optText, oIndex) => {
+          const optDiv = document.createElement("div");
+          optDiv.className = "option";
+          optDiv.textContent = optText;
+          
+          optDiv.addEventListener("click", function() {
+            if (oIndex === item.ans) {
+              optDiv.classList.add("correct");
+              // Loại bỏ class 'incorrect' ở các đáp án khác nếu có
+              const siblings = qBlock.querySelectorAll(".option");
+              siblings.forEach(sib => sib.classList.remove("incorrect"));
+            } else {
+              optDiv.classList.add("incorrect");
+              setTimeout(() => {
+                optDiv.classList.remove("incorrect"); // Cho phép chọn lại
+              }, 1000); // Đổi màu đỏ trong 1 giây rồi tắt để tiện chọn lại
+            }
+          });
+
+          qBlock.appendChild(optDiv);
+        });
+
+        container.appendChild(qBlock);
+      });
+    }
+
+    // Nút làm lại và xáo trộn
+    document.getElementById("resetBtn").addEventListener("click", () => {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+      renderQuiz();
+    });
+
+    // Gọi lần đầu khi mở web
+    renderQuiz();
+  </script>
+</body>
+</html>
